@@ -1,3 +1,10 @@
+X, Y        = (1000, 600)  # Size of window
+pos         = (0, 0)       # Pos of chart
+SIZE        = (X, Y)       # Size of chart 
+inputColour = (255,0,255)  # RGB colour of chart
+
+
+
 ## FUNCTIONS ##
 if True: ## DRAW CHART FUNCTION(S) ##
 	#-> Fastest by far
@@ -60,41 +67,28 @@ if True:
 		import pygame as py
 		py.init(); py.display.set_caption('Color Chart')
 		clock = py.time.Clock()
-		tempVar = 1000
-		if False:
-			while True:
-				try:
-					tempVar = int(input('Enter screen width (px): '))
-					try:
-						if tempVar >= 50:
-							break
-						elif tempVar < 50:
-							print('  Error: Invalid input v\u0332a\u0332l\u0332u\u0332e\u0332;')
-							print('    Input must be a positive intager above 50 \n')
-					except NameError:
-						pass
-				except ValueError:
-					print('  Error: Invalid input t\u0332y\u0332p\u0332e\u0332;')
-					print('    Input must be a positive intager above 50 \n')
-		X, Y = tempVar, int(tempVar *0.6)
 		SCREEN = py.display.set_mode((X, Y), py.NOFRAME)
 
 	## USE OF FUNCTIONS ##
-	pos    = (0, 0)           # Change pos of top left
-	SIZE   = (X, Y)           # Change size of window 
-	inputColour = (255,0,255)  # Change RGB colour for chart
-
 	if True:
 		font = py.font.Font(None, int(X*0.05))
 		mousePos = (int(-X*0.1), int(-Y*0.1))
 		frameNum = 1
+		totalTime = 0
 		with open('frame_times (ms).txt', 'a') as f:
 			f.write('\nFrame Num | Time (ms) -----------------------------------------------------\n')
 		with open('retrieved_colours (ms).txt', 'a') as f:
 			f.write('\nColour (R, G, B) | Click Pos | Frame Num ----------------------------------------------\n')
 		while True:
+			keys = py.key.get_pressed()
+			if keys[py.K_ESCAPE]:
+				with open('frame_times (ms).txt', 'a') as f:
+					f.write(f'========== Average Frame Time: {totalTime/frameNum} (ms)\n')
+				py.quit()
 			for event in py.event.get():
 				if event.type == py.QUIT:
+					with open('frame_times (ms).txt', 'a') as f:
+						f.write(f'========== Average Frame Time: {totalTime/frameNum} (ms)\n')
 					py.quit()
 			clock.tick()
 
@@ -116,7 +110,9 @@ if True:
 			text = font.render(f"FPS: {int(clock.get_fps())}", True, (255,255,255), (0,0,0))
 			SCREEN.blit(text, (0,0))
 			with open('frame_times (ms).txt', 'a') as f:
-				f.write(f'{frameNum}| {clock.get_time()}\n')
+				frameTime = clock.get_time()
+				f.write(f'{frameNum}| {frameTime}\n')
+				totalTime += frameTime
 			py.draw.circle(SCREEN, (0,0,0), (mousePos[0], mousePos[1]), int(X*0.005), int(X*0.002))
 			py.display.update()
 			frameNum += 1

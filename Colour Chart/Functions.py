@@ -21,7 +21,7 @@ def get_colour(mousePos, inputColour, chartPos, chartSize): #-> Returns RGB colo
 	return outputColour
 
 ## FASTEST ## 
-def colour_chart(chartSize, inputColour): #-> Returns a surface with the colour chart on it
+def colour_chart(chartSize, inputColour): #-> Returns a scaled surface with the colour chart on it
 	#-> Creates a 127x127 gradient chart, then scales it to specified size
 	chartSurface = py.Surface((127, 127)) # Create a surface for chart
 	for i in range(127): #Y iteration
@@ -34,7 +34,7 @@ def colour_chart(chartSize, inputColour): #-> Returns a surface with the colour 
 	return py.transform.scale(chartSurface, chartSize)
 
 ## SLOWER ## - super accurate but 1/4 speed of colour_chart()
-def colour_chart_255(chartSize, inputColour): ## Creates 255x255 grid, then scales results to fit specifications 
+def colour_chart_255(chartSize, inputColour): #-> Creates 255x255 grid, then scales results to fit specifications 
 	chartSurface = py.Surface((255, 255)) # Create a surface for chart
 	for i in range(255): #Y Iteration
 		differenceStep1 = (inputColour[0]-i)/255
