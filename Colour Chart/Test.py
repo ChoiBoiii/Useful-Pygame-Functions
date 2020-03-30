@@ -1,3 +1,11 @@
+"""
+Python 3.8
+
+Created on Mon Mar 30 2020
+
+@author: Isaak Choi
+"""
+
 X, Y        = (1000, 600)  # Size of window
 pos         = (0, 0)       # Pos of chart
 SIZE        = (X, Y)       # Size of chart 

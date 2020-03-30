@@ -1,5 +1,10 @@
-# REQUIRES module 'pygame'
-# Created in pygame 3.8
+"""
+Python 3.8
+
+Created on Mon Mar 30 2020
+
+@author: Isaak Choi
+"""
 
 # mousePos    = (posX, posY)    -> py.mouse.get_pos()
 # inputColour = (R, G, B)       -> Must be in RGB tuple
