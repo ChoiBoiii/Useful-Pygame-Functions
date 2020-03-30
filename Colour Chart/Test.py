@@ -3,11 +3,11 @@ if True: ## DRAW CHART FUNCTION(S) ##
 	#-> Fastest by far
 	def colour_chart(chartSize, inputColour): ## Creates 127x127 grid, then scales results to fit specifications 
 		chartSurface = py.Surface((127, 127)) # Create a surface for chart
-		for i in range(0, 127): # Y
+		for i in range(127): # Y
 			differenceStep1 = (inputColour[0]-i*2)/255
 			differenceStep2 = (inputColour[1]-i*2)/255
 			differenceStep3 = (inputColour[2]-i*2)/255
-			for j in range(0, 127): # X
+			for j in range(127): # X
 				chartSurface.set_at((j, i), 
 					(i*2 +int(differenceStep1*j*2), i*2 +int(differenceStep2*j*2), i*2 +int(differenceStep3*j*2)))
 		return py.transform.scale(chartSurface, chartSize)
@@ -107,7 +107,7 @@ if True:
 						outputColour = get_colour(mousePos, inputColour, pos, SIZE)
 		######################
 
-		
+
 						print(f'Click Pos:       {mousePos}')
 						print(f'Returned Colour: {outputColour}\n')
 			text = font.render(f"{clock.get_fps()}", True, (255,255,255), (0,0,0))
