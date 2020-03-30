@@ -78,21 +78,25 @@ if True:
 					print('    Input must be a positive intager above 50 \n')
 		X, Y = tempVar, int(tempVar *0.6)
 		SCREEN = py.display.set_mode((X, Y), py.NOFRAME)
-		print('Initialising Colour Chart...')
 
 	## USE OF FUNCTIONS ##
 	pos    = (0, 0)           # Change pos of top left
 	SIZE   = (X, Y)           # Change size of window 
-	inputColour = (0,50,255)  # Change RGB colour for chartß
+	inputColour = (255,0,255)  # Change RGB colour for chart
+
 	if True:
 		font = py.font.Font(None, int(X*0.05))
 		mousePos = (int(-X*0.1), int(-Y*0.1))
+		frameNum = 1
+		with open('frame_times (ms).txt', 'a') as f:
+			f.write('\nFrame Num | Time (ms) -----------------------------------------------------\n')
+		with open('retrieved_colours (ms).txt', 'a') as f:
+			f.write('\nColour (R, G, B) | Click Pos | Frame Num ----------------------------------------------\n')
 		while True:
 			for event in py.event.get():
 				if event.type == py.QUIT:
 					py.quit()
 			clock.tick()
-
 
 		## ## COLOUR CHART ## ##
 			chartSurface = colour_chart(SIZE, inputColour) # Create colour gradient
@@ -107,15 +111,15 @@ if True:
 						outputColour = get_colour(mousePos, inputColour, pos, SIZE)
 		######################
 
-
-						print(f'Click Pos:       {mousePos}')
-						print(f'Returned Colour: {outputColour}\n')
-			text = font.render(f"{clock.get_fps()}", True, (255,255,255), (0,0,0))
+						with open('retrieved_colours (ms).txt', 'a') as f:
+							f.write(f'{outputColour} | {mousePos} | {frameNum}\n')
+			text = font.render(f"FPS: {int(clock.get_fps())}", True, (255,255,255), (0,0,0))
 			SCREEN.blit(text, (0,0))
 			with open('frame_times (ms).txt', 'a') as f:
-				f.write(f'{clock.get_time()}\n')
+				f.write(f'{frameNum}| {clock.get_time()}\n')
 			py.draw.circle(SCREEN, (0,0,0), (mousePos[0], mousePos[1]), int(X*0.005), int(X*0.002))
-			py.display.update() #only update part that needs to be updated?
+			py.display.update()
+			frameNum += 1
 
 
 
