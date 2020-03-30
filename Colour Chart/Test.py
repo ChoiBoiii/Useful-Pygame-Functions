@@ -91,34 +91,31 @@ if True:
 			for event in py.event.get():
 				if event.type == py.QUIT:
 					py.quit()
+			clock.tick()
+
+
+		## ## COLOUR CHART ## ##
+			chartSurface = colour_chart(SIZE, inputColour) # Create colour gradient
+			SCREEN.blit(chartSurface, (pos))
+		########################
+			clock.tick()
 			if py.mouse.get_pressed()[0]: # Replace with input to determine when to return colour
-
-
 		## ## GET COLOUR ## ##
 				mousePos = py.mouse.get_pos()
 				if pos[0] < mousePos[0] < pos[0]+SIZE[0]:
 					if pos[1] < mousePos[1] < pos[1]+SIZE[1]:
 						outputColour = get_colour(mousePos, inputColour, pos, SIZE)
 		######################
-			clock.tick()
-		## ## COLOUR CHART ## ##
-			chartSurface = colour_chart(SIZE, inputColour) # Create colour gradient
-			SCREEN.blit(chartSurface, (pos))
-		########################
 
 		
-			clock.tick()
+						print(f'Click Pos:       {mousePos}')
+						print(f'Returned Colour: {outputColour}\n')
 			text = font.render(f"{clock.get_fps()}", True, (255,255,255), (0,0,0))
 			SCREEN.blit(text, (0,0))
 			with open('frame_times (ms).txt', 'a') as f:
 				f.write(f'{clock.get_time()}\n')
 			py.draw.circle(SCREEN, (0,0,0), (mousePos[0], mousePos[1]), int(X*0.005), int(X*0.002))
 			py.display.update() #only update part that needs to be updated?
-			if py.mouse.get_pressed()[0]: 
-				if pos[0] < mousePos[0] < pos[0]+SIZE[0]:
-					if pos[1] < mousePos[1] < pos[1]+SIZE[1]:
-						print(f'Click Pos:       {mousePos}')
-						print(f'Returned Colour: {outputColour}\n')
 
 
 
