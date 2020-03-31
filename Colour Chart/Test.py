@@ -113,13 +113,12 @@ if True:
 					SCREEN.fill((0,0,0))
 					#print(f'Window Size: {(X, Y)}px')
 					#print(f'Chart Size: {SIZE}px\n')
-			clock.tick()
+					
 
 		## ## COLOUR CHART ## ##
 			chartSurface = colour_chart(SIZE, inputColour) # Create colour gradient
 			SCREEN.blit(chartSurface, (pos))
 		########################
-			clock.tick()
 			if py.mouse.get_pressed()[0]: # Replace with input to determine when to return colour
 		## ## GET COLOUR ## ##
 				mousePos = py.mouse.get_pos()
@@ -130,10 +129,12 @@ if True:
 
 						with open('retrieved_colours (ms).txt', 'a') as file:
 							file.write(f'{outputColour} | {mousePos} | {frameNum}\n')
-			text = font.render(f"FPS: {int(clock.get_fps())}", True, (255,255,255), (0,0,0))
+							
+			clock.tick()
+			frameTime = clock.get_time()
+			text = font.render(f"FPS: {int(1000/frameTime)}", True, (255,255,255), (0,0,0))
 			SCREEN.blit(text, (0,0))
 			with open('frame_times (ms).txt', 'a') as file:
-				frameTime = clock.get_time()
 				file.write(f'{frameNum}| {frameTime}\n')
 				totalTime += frameTime
 			py.draw.circle(SCREEN, (0,0,0), (mousePos[0], mousePos[1]), int(X*0.005), int(X*0.002))
