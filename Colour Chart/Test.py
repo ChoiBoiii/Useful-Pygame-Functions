@@ -5,6 +5,10 @@ Created on Mon Mar 30 2020
 
 @author: Isaak Choi
 """
+#if event.type == py.VIDEORESIZE:
+#    # There's some code to add back window content here.
+#    surface = py.display.set_mode((event.w, event.h),
+#                                      py.RESIZABLE)
 
 X, Y        = (1000, 600)  # Size of window
 pos         = (0, 0)       # Pos of chart
@@ -75,29 +79,40 @@ if True:
 		import pygame as py
 		py.init(); py.display.set_caption('Color Chart')
 		clock = py.time.Clock()
-		SCREEN = py.display.set_mode((X, Y), py.NOFRAME)
+		SCREEN = py.display.set_mode((X, Y), py.NOFRAME | py.RESIZABLE)
 
 	## USE OF FUNCTIONS ##
 	if True:
+		chartSizeRatio = (X/SIZE[0], Y/SIZE[1])
 		font = py.font.Font(None, int(X*0.05))
 		mousePos = (int(-X*0.1), int(-Y*0.1))
 		frameNum = 1
 		totalTime = 0
-		with open('frame_times (ms).txt', 'a') as f:
-			f.write('\nFrame Num | Time (ms) -----------------------------------------------------\n')
-		with open('retrieved_colours (ms).txt', 'a') as f:
-			f.write('\nColour (R, G, B) | Click Pos | Frame Num ----------------------------------------------\n')
+		with open('frame_times (ms).txt', 'a') as file:
+			file.write('\nFrame Num | Time (ms) -----------------------------------------------------\n')
+		with open('retrieved_colours (ms).txt', 'a') as file:
+			file.write('\nColour (R, G, B) | Click Pos | Frame Num ----------------------------------------------\n')
 		while True:
 			keys = py.key.get_pressed()
 			if keys[py.K_ESCAPE]:
-				with open('frame_times (ms).txt', 'a') as f:
-					f.write(f'========== Average Frame Time: {totalTime/frameNum} (ms)\n')
+				with open('frame_times (ms).txt', 'a') as file:
+					file.write(f'========== Average Frame Time: {totalTime/frameNum} (ms)\n')
 				py.quit()
 			for event in py.event.get():
 				if event.type == py.QUIT:
-					with open('frame_times (ms).txt', 'a') as f:
-						f.write(f'========== Average Frame Time: {totalTime/frameNum} (ms)\n')
+					with open('frame_times (ms).txt', 'a') as file:
+						file.write(f'========== Average Frame Time: {totalTime/frameNum} (ms)\n')
 					py.quit()
+				if event.type == py.VIDEORESIZE:
+					X = event.w
+					Y = event.h
+					SCREEN = py.display.set_mode((X, Y),
+						py.NOFRAME | py.RESIZABLE)
+					SIZE = (int(X/chartSizeRatio[0]), int(Y/chartSizeRatio[1]))
+					font = py.font.Font(None, int(X*0.05))
+					SCREEN.fill((0,0,0))
+					#print(f'Window Size: {(X, Y)}px')
+					#print(f'Chart Size: {SIZE}px\n')
 			clock.tick()
 
 		## ## COLOUR CHART ## ##
@@ -113,13 +128,13 @@ if True:
 						outputColour = get_colour(mousePos, inputColour, pos, SIZE)
 		######################
 
-						with open('retrieved_colours (ms).txt', 'a') as f:
-							f.write(f'{outputColour} | {mousePos} | {frameNum}\n')
+						with open('retrieved_colours (ms).txt', 'a') as file:
+							file.write(f'{outputColour} | {mousePos} | {frameNum}\n')
 			text = font.render(f"FPS: {int(clock.get_fps())}", True, (255,255,255), (0,0,0))
 			SCREEN.blit(text, (0,0))
-			with open('frame_times (ms).txt', 'a') as f:
+			with open('frame_times (ms).txt', 'a') as file:
 				frameTime = clock.get_time()
-				f.write(f'{frameNum}| {frameTime}\n')
+				file.write(f'{frameNum}| {frameTime}\n')
 				totalTime += frameTime
 			py.draw.circle(SCREEN, (0,0,0), (mousePos[0], mousePos[1]), int(X*0.005), int(X*0.002))
 			py.display.update()
