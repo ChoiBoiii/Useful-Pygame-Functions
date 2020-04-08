@@ -1,12 +1,13 @@
 '''
-Created with | Python 3.8.2
-@Authur      | Isaak Choi
+Made By   | Isaak Choi
+Made With | Python 3.8.2; Pygame 2.0.0.dev6
+License   | MIT
 '''
 
 # produce ordered colour-points via an RGB gradient generated from given colour-points
 def colGradPt(selectedPoint, colourPoints=[(255,0,0), (255,0,255), (0,0,255), (0,255,255), (0,255,0), (255,255,0)], length=500): 
-    '''Creates a gradient from 'colourPoints', fading evenly along the 'length'. 
-    Inputting the 'selectedPoint' will return that point along the gradient.'''
+    '''Creates a virtual gradient from 'colourPoints', fading evenly along the given 'length'. 
+    Inputting the 'selectedPoint' will return the colour of that point along the gradient.'''
     __author__ = "Isaak Choi"
     __license__ = "MIT"
 
