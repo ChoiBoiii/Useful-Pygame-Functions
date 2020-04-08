@@ -4,7 +4,7 @@ Created with | Python 3.8.2
 '''
 
 # produce ordered colour-points via an RGB gradient generated from given colour-points
-def colour_loop_RGB(selectedPoint, colourPoints=[(255,0,0), (255,0,255), (0,0,255), (0,255,255), (0,255,0), (255,255,0)], length=500): 
+def colGradPt(selectedPoint, colourPoints=[(255,0,0), (255,0,255), (0,0,255), (0,255,255), (0,255,0), (255,255,0)], length=500): 
 	'''Creates a gradient from 'colourPoints', fading evenly along the 'length'. 
 	Inputting the 'selectedPoint' will return that point along the gradient.'''
 	__author__ = "Isaak Choi"
