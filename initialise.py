@@ -10,7 +10,7 @@ Pygame 2.0.0.dev6
 import pygame as py
 
 
-def scale_display(displayRatio=(16/9), scale=1):
+def scale_display(displayRatio=(16/9), scale=0.8):
     ## DOCSTRING
     '''
 Returns the largest possible width and height of display with given 'displayRatio', then scales based on the given 'scale'
@@ -31,7 +31,7 @@ displayRatio
 scale
     -> After the largest display size is found, the display is then scaled by multiplying the display size by the 'scale'
         -> scale=1 results in largest display size
-        -> scale<=0 results in the game crashing
+        -> scale<=0 results in the program crashing
         -> scale>1 results in parts of the display being off-screen
     '''
 
@@ -42,7 +42,7 @@ scale
     monitorWidth = py.display.Info().current_w
     monitorHeight = py.display.Info().current_h
 
-    ## CHECK SCALED SCREEN AGAINST MONITOR BORDERS & SET MAX DIMENSIONS
+    ## CHECK SCALED SCREEN AGAINST MONITOR BORDERS & FIND MAX DIMENSIONS
     if int(monitorHeight*displayRatio) <= monitorWidth:
         outputWidth = monitorHeight*displayRatio
         outputHeight = outputWidth/displayRatio
@@ -50,23 +50,25 @@ scale
         outputHeight = monitorWidth/displayRatio
         outputWidth = outputHeight * displayRatio
 
+    ## DETECT INVALID SCALE
+    if scale <= 0:
+        scale = 1
+        print('Invalid scale input; scale must be greater than 0. Set scale to 1 to prevent game crash.')
+
     ## SCALE RESULTING DISPLAY WINDOW TO SPECIFICATIONS
+        #-> Float to int conversion because pygame.display.set_mode() requires intager input
     outputWidth = int(outputWidth * scale)
     outputHeight = int(outputHeight * scale)
 
     ## PREVENT CRASH FROM DISPLAY SIZE 
     if outputWidth < 1:
-        outputWidth = 1
+        print('\nResulting width was less than 1, set value of width to 1 to prevent game crash.')
     if outputHeight < 1:
         outputHeight = 1
+        print('\nResulting height was less than 1, set value of height to 1 to prevent game crash.')
 
     ## RETURN DISPLAY DIMENSIONS
     return (outputWidth, outputHeight)
-
-
-
-
-
 
 
 
